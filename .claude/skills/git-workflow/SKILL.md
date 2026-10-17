@@ -14,14 +14,36 @@ ni mention dans le message. **Interdits absolus** : `Co-Authored-By: Claude...`,
 `🤖 Generated with Claude Code`, toute référence à Claude/Anthropic/IA. Seul contributeur :
 **Dakar2024** (`dakar08octobre2024@gmail.com`).
 
-Checklist avant **chaque** commit/push (automatique pour tous les agents) :
+### Correctif à la racine (automatique, déjà configuré)
+Claude Code ajoute ces lignes via un réglage `attribution`. On le **neutralise une fois
+pour toutes** plutôt que de nettoyer commit par commit (clé vérifiée dans la doc officielle ;
+`includeCoAuthoredBy` est son ancêtre déprécié) :
+```json
+{
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  }
+}
+```
+- `commit: ""` → supprime le trailer `Co-Authored-By: Claude` des commits.
+- `pr: ""` → supprime le footer `Generated with Claude Code` des pull requests.
+- Il existe aussi `attribution.sessionUrl` pour omettre le lien de session claude.ai des
+  commits cloud / Remote Control.
+
+Ce réglage est **global** (`~/.claude/settings.json`, s'applique à tous les projets) **et**
+dans le `.claude/settings.json` du kit (il voyage avec l'équipe). Pour un seul projet sans
+versionner le réglage, utiliser `.claude/settings.local.json`. Pas besoin de hook Git par projet.
+
+### Filet de sécurité (chaque agent, avant chaque commit/push)
+Le réglage règle le cas normal ; la vérification reste la **garantie** si le réglage n'est
+pas appliqué (projet sans le kit, settings non chargé, hook/template qui réinjecte une ligne) :
 ```bash
 # 1) auteur/committer = Dakar2024
 git config user.name   # -> Dakar2024
 git config user.email  # -> dakar08octobre2024@gmail.com
-# 2) message SANS trailer Claude (relire avant de valider)
-# 3) si un hook/template ajoute une ligne Claude, la retirer
-# 4) controle apres coup
+# 2) message SANS trailer Claude (relire avant de valider ; retirer toute ligne ajoutee)
+# 3) controle apres coup
 git log -1 --format='%an <%ae>%n%b'   # ne doit contenir que Dakar2024, aucune mention Claude
 ```
 Si un commit déjà écrit contient une trace de Claude, le corriger (`git commit --amend` ou
