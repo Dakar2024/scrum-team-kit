@@ -1,0 +1,25 @@
+{
+  "$comment": "Config de l'équipe d'agents Scrum. Copier dans .claude/ d'un projet (ou fusionner).",
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "sonnet"
+  },
+  "teammateMode": "in-process",
+  "subagentPromptCacheTtl": "1h",
+  "statusLine": {
+    "type": "command",
+    "command": "node .claude/statusline.js"
+  },
+  "hooks": {
+    "TaskCompleted": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/definition-of-done.js"
+          }
+        ]
+      }
+    ]
+  }
+}
