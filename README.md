@@ -58,6 +58,7 @@ scrum-team-kit/
 ├── install.mjs                 # installeur portable (Node, cross-platform)
 ├── CLAUDE.md                   # règles du projet (clean code, Scrum, stack, budget)
 ├── docs-templates/
+│   ├── CONTEXT.template.md     # template d'architecture → déposé en CONTEXT.md dans chaque projet
 │   └── DEPENDENCY-REPORT.md    # vérif des starters (versions + alerte sécurité), 2026-10-17
 └── .claude/
     ├── settings.json           # active Agent Teams, Sonnet par défaut, hook, statusline

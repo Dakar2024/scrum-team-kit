@@ -29,7 +29,8 @@ Tout va dans `docs/design/` :
   `design-system`, `design-handoff`, `accessibility-review`, `ux-copy`, `ui-ux-pro-max`,
   `design-taste-frontend`.
 - Respecte l'architecture du projet : front React + TanStack + Tailwind v4 + shadcn/ui
-  (voir `CONTEXT.template.md` si présent et le skill `starter-react-tanstack`).
+  (lis `CONTEXT.md` à la racine du projet — source de vérité de l'architecture — et le
+  skill `starter-react-tanstack`).
 
 ## Règles
 - **Tu ne codes pas la feature** ; tu livres une spec que les `frontend-dev` implémentent.

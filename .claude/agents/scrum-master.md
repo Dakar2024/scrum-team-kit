@@ -27,6 +27,9 @@ le top de passage d'une phase à la suivante ; toi (le lead) tu exécutes le spa
 teammate ne peut pas en spawner un autre.
 1. **Features** : `product-owner` (souvent en mode solo, hors équipe) → backlog prêt.
 2. **Planning** : `product-owner`, `devops` (stratégie de branches), `token-steward`.
+   **Fais remplir `CONTEXT.md`** (racine du projet) ici, avant la phase dev : stack,
+   arborescence, conventions, câblage, prod. C'est la **source de vérité de l'architecture**
+   (le « comment »), distincte du backlog (le « quoi »). Tous les agents la lisent en premier.
 3. **Design** (si écran front concerné) : `ui-ux-designer` discute et produit la spec
    dans `docs/design/`. Les `frontend-dev` **ne démarrent qu'une fois la spec validée**.
    Quand le design est figé, le designer n'a plus de rôle — on le ferme.

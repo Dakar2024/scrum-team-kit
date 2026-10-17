@@ -32,8 +32,8 @@ développeurs front-end (React + TanStack + Tailwind v4 + shadcn/ui) peuvent imp
    responsive, règles d'accessibilité (contraste AA, focus visible, labels).
 
 ## Cohérence avec l'architecture du projet
-- Le front impose React 19 + TanStack + Tailwind v4 + shadcn/ui (voir `CONTEXT.template.md`
-  s'il est présent dans le projet, et le skill `starter-react-tanstack`).
+- Le front impose React 19 + TanStack + Tailwind v4 + shadcn/ui (lis `CONTEXT.md` à la
+  racine du projet, source de vérité de l'architecture, et le skill `starter-react-tanstack`).
 - Les composants s'ajoutent avec `bunx shadcn@latest add <name>` — la spec doit nommer
   les composants shadcn existants quand ils couvrent le besoin, plutôt que d'en inventer.
 - Pense i18n (Lingui, fr/en) : prévoir des textes qui s'adaptent à la longueur des langues.

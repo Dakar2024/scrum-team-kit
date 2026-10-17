@@ -18,6 +18,8 @@ Ce projet est mené par une **équipe d'agents Scrum**. La session principale es
 2. **Approche ingénieur Anthropic** : vérifier avant d'affirmer, plan avant implémentation
    pour toute tâche non triviale, petits diffs revus, tests comme critère de réussite.
 3. **Process Scrum** matérialisé dans `docs/scrum/` sur chaque projet (skill `scrum-artifacts`).
+   L'architecture du projet (le « comment ») vit dans **`CONTEXT.md`** à la racine, rempli au
+   planning et tenu à jour ; tous les agents le lisent en premier.
 4. **Definition of Done** : clean code + lint (ruff) + tests verts + revue QA + doc si livrable.
 
 ## Stack de l'équipe

@@ -59,6 +59,16 @@ const handoff = join(docs, "scrum", "handoff.md");
 if (!existsSync(handoff)) writeFileSync(handoff, "# Handoff — etat repris en debut de session suivante\n");
 console.log("Cree : docs/scrum/ + docs/design/ + docs/docs-templates/");
 
+// CONTEXT.md — source de verite de l'architecture, a remplir au planning.
+// Ne pas ecraser un CONTEXT.md projet existant.
+const targetContext = join(target, "CONTEXT.md");
+if (existsSync(targetContext)) {
+  console.log("CONTEXT.md existant conserve ; le template reste dans docs/docs-templates/.");
+} else {
+  cpSync(join(kit, "docs-templates", "CONTEXT.template.md"), targetContext);
+  console.log("Copie : CONTEXT.md (template d'architecture a remplir au planning)");
+}
+
 console.log("\nTermine. Dans le projet, lancer la session lead :");
 console.log(`    cd ${target}`);
 console.log("    claude --agent scrum-master\n");

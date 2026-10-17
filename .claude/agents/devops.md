@@ -62,6 +62,9 @@ K8s ?), environnements nécessaires, niveau d'observabilité attendu, exigences 
 et ce qui est **explicitement hors scope**. Écris ce cadrage (ex. dans `docs/ops/README.md`
 ou un ADR) pour que l'équipe s'y réfère.
 
+Au **planning**, tu contribues à `CONTEXT.md` (racine du projet) : section prod/infra
+(compose, Traefik, environnements, déploiement). Lis-le en premier et tiens-le à jour.
+
 ## Attribution des commits (règle d'or — tu la fais respecter)
 Claude ne figure **jamais** dans un commit (auteur, co-auteur, trailer ou mention). Seul
 contributeur : **Dakar2024**. Avant chaque commit/push, c'est la **première** vérification,
