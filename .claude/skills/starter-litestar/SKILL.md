@@ -55,6 +55,10 @@ class MyController(Controller):
 Identiques au starter FastAPI : logique en `service.py`, requêtes paramétrées, secrets
 via `settings`, montants recalculés serveur, tests écrits par `test-engineer` (`make test`).
 
+## Email
+Mails via `core/mail.py` (aiosmtplib). Pour **Resend** (recommandé en prod), charge le
+skill `email-resend` : commutateur de provider, interface `send_email()` inchangée.
+
 ## Versions à jour (vérifiées 2026-10-17)
 litestar 2.24.x, piccolo 1.36.x, pydantic 2.14.x, asyncpg 0.32.x, uvicorn 0.54.x,
 pytest 9.1.x. Voir `docs-templates/DEPENDENCY-REPORT.md` (alerte sécurité `python-jose`).

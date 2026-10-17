@@ -65,7 +65,8 @@ scrum-team-kit/
     ├── hooks/definition-of-done.js    # porte qualité (ruff) sur TaskCompleted (Node)
     ├── agents/                 # les 11 rôles
     └── skills/                 # clean-code, scrum-artifacts, git-workflow, design-resources,
-                                # starter-fastapi/litestar/react-tanstack, docs-style, security-audit
+                                # starter-fastapi/litestar/react-tanstack, email-resend,
+                                # docs-style, security-audit
 ```
 
 ## Comment travailler avec l'équipe

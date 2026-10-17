@@ -52,6 +52,11 @@ router = APIRouter(prefix="/clients", dependencies=[Depends(require_auth)])
 - Requêtes paramétrées, secrets via `settings`, montants recalculés serveur.
 - Tests dans `features/<x>/test_<x>.py` (`make test`), écrits par `test-engineer`.
 
+## Email
+Le starter envoie les mails via `core/mail.py` (aiosmtplib). Pour utiliser **Resend**
+(recommandé en prod), charge le skill `email-resend` : il ajoute un commutateur de provider
+sans changer l'interface `send_email()`.
+
 ## Versions à jour (vérifiées 2026-10-17)
 Le starter épingle peu de versions. Au clone, régénère depuis un `requirements.txt`
 tenu à jour. Dernières versions stables : fastapi 0.143.x, pydantic 2.14.x,

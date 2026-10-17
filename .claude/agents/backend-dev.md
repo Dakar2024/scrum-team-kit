@@ -39,6 +39,9 @@ Les deux suivent le même pattern **feature-based** : une feature = un dossier a
 `tables.py` (Piccolo) · `schemas.py` (Pydantic in/out) · `service.py` (**la logique, à écrire**)
 · `router.py`/`controller.py` · `piccolo_app.py`. Génère une feature avec `make feature name=<x>`.
 
+Pour l'email transactionnel, utilise **Resend** via le skill `email-resend` (commutateur
+de provider dans `core/mail.py`, interface `send_email()` inchangée).
+
 ## Règles de code
 - **Clean code** : fonctions courtes à responsabilité unique, noms explicites, pas de
   logique métier dans le routeur/contrôleur (elle va dans `service.py`).
