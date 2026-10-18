@@ -80,6 +80,32 @@ Chaque agent, **quand il finit**, dit quel agent devrait prendre la suite. Mais 
 toi qui donnes le feu vert** à chaque étape. Et **seul le Scrum Master peut lancer
 (« spawner ») les autres agents** — un agent ne peut pas en lancer un autre.
 
+### Mode recommandé : TOUT dans un seul terminal
+
+Pas besoin d'ouvrir un terminal par agent. Tu lances **une seule** commande, puis tout
+se passe dans la session, en écrivant des phrases.
+
+1. **Terminal (une seule fois) :**
+   ```bash
+   cd /c/Users/PC/Documents/mon-projet
+   claude --agent scrum-master
+   ```
+2. **Dans la session, tu lances les agents en une phrase :**
+   > « Spawn le `project-analyst`, le `product-owner` et le `tech-writer`. »
+3. **Tu bascules entre eux** sans rien relancer : flèches `↑` `↓` (panneau sous la saisie)
+   → `Entrée` pour parler à l'agent choisi ; `Échap` pour revenir au chef.
+4. **Ils tournent en parallèle** : pendant que tu brainstormes avec le `product-owner`, le
+   `tech-writer` écrit le backlog et l'analyste met `CONTEXT.md` à jour.
+5. **Ferme un agent fini** pour économiser des tokens :
+   > « Demande au `project-analyst` de s'arrêter, son travail est fait. »
+
+> Le mode **solo** (`claude --agent product-owner`) existe aussi : il est moins cher pour
+> brainstormer avec **un seul** rôle, mais c'est **lui** qui oblige à relancer le terminal
+> pour changer d'agent. Pour travailler avec **plusieurs** rôles, reste en mode équipe.
+
+Les sections ci-dessous détaillent quel rôle intervient à quelle phase (le contenu du
+travail) ; côté manipulation, tu restes toujours dans ce seul terminal.
+
 ### A) Projet NEUF et vide
 
 1. **Terminal :** `claude --agent product-owner`
