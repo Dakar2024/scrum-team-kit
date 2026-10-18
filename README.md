@@ -8,11 +8,12 @@ collaborent via la liste de tâches partagée et la messagerie inter-agents.
 Projets full-stack de l'utilisateur : back-end Python (FastAPI / Litestar) + front React
 + TanStack, avec clean code, Scrum et DevOps comme règles de base.
 
-## L'équipe (11 rôles)
+## L'équipe (12 rôles)
 
 | Agent | Rôle | Modèle | Instances |
 |---|---|---|---|
 | `scrum-master` | Lead de session, cérémonies, Definition of Done | inherit | 1 (lead) |
+| `project-analyst` | Scanne le projet, remplit `CONTEXT.md`, oriente la reprise (1er lancé) | sonnet | 1 |
 | `product-owner` | Backlog, user stories, critères d'acceptation, review | sonnet | 1 |
 | `ui-ux-designer` | Direction visuelle + spec de handoff (phase design) | sonnet | 1 |
 | `backend-dev` | FastAPI / Litestar depuis les starters | sonnet | 2 |
@@ -30,11 +31,11 @@ phase et on ferme ceux qui ont fini (budget tokens, abonnement Pro). 3 à 5 team
 
 ## Flux par phases
 ```
-features        planning        design            dev               vérif            review
-product-owner → PO + devops  → ui-ux-designer → backend-dev ×2   → test-engineer  → product-owner
-(mode solo)     + token-        (si front)       frontend-dev ×2    qa-reviewer       tech-writer
-                steward         spec validée →    (impl. la spec)    pentester         token-steward
-                                puis front-end                                        (handoff)
+orientation     features        planning        design            dev               vérif            review
+project-analyst → product-owner → PO + devops  → ui-ux-designer → backend-dev ×2   → test-engineer  → product-owner
+(CONTEXT.md,      (mode solo)     + token-        (si front)       frontend-dev ×2    qa-reviewer       tech-writer
+ état, reco)                      steward         spec validée →    (impl. la spec)    pentester         token-steward
+                                                  puis front-end                                        (handoff)
 ```
 Tu donnes le top de passage d'une phase à l'autre ; le **lead** exécute le spawn
 (un teammate ne peut pas en spawner un autre — seul le lead spawn).

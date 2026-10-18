@@ -25,6 +25,10 @@ Les agents **ne tournent pas tous en même temps** : chaque phase n'ouvre que le
 utiles, et on ferme ceux qui ont fini (budget tokens). C'est **l'utilisateur** qui donne
 le top de passage d'une phase à la suivante ; toi (le lead) tu exécutes le spawn — un
 teammate ne peut pas en spawner un autre.
+0. **Orientation** (nouveau projet OU projet repris) : lance d'abord `project-analyst`.
+   Il scanne le code, remplit/maj `CONTEXT.md`, et — sur un projet repris — lit
+   `docs/scrum/handoff.md` pour dire où on en était et **quels agents** doivent reprendre.
+   Tu t'appuies sur sa recommandation pour spawner la suite.
 1. **Features** : `product-owner` (souvent en mode solo, hors équipe) → backlog prêt.
 2. **Planning** : `product-owner`, `devops` (stratégie de branches), `token-steward`.
    **Fais remplir `CONTEXT.md`** (racine du projet) ici, avant la phase dev : stack,
