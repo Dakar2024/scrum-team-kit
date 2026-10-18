@@ -1,116 +1,226 @@
 # scrum-team-kit
 
-Équipe d'agents Claude Code organisée comme une équipe Scrum, **portable d'un projet à
-l'autre**. La session principale (Scrum Master) coordonne des teammates spécialisés qui
-collaborent via la liste de tâches partagée et la messagerie inter-agents.
+Une **équipe d'agents Claude Code** organisée comme une équipe Scrum (chef de projet,
+analyste, Product Owner, designer, développeurs, testeurs, sécurité, DevOps, rédacteur).
+Tu l'installes dans **n'importe quel projet**, neuf ou déjà commencé, et les agents
+travaillent ensemble, chacun son métier.
 
-## Pour qui
-Projets full-stack de l'utilisateur : back-end Python (FastAPI / Litestar) + front React
-+ TanStack, avec clean code, Scrum et DevOps comme règles de base.
+Ce README explique, pas à pas et **sans rien supposer connu** : où taper les commandes,
+par quel agent commencer, et comment passer d'un agent au suivant.
 
-## L'équipe (12 rôles)
+---
 
-| Agent | Rôle | Modèle | Instances |
-|---|---|---|---|
-| `scrum-master` | Lead de session, cérémonies, Definition of Done | inherit | 1 (lead) |
-| `project-analyst` | Scanne le projet, remplit `CONTEXT.md`, oriente la reprise (1er lancé) | sonnet | 1 |
-| `product-owner` | Backlog, user stories, critères d'acceptation, review | sonnet | 1 |
-| `ui-ux-designer` | Direction visuelle + spec de handoff (phase design) | sonnet | 1 |
-| `backend-dev` | FastAPI / Litestar depuis les starters | sonnet | 2 |
-| `frontend-dev` | React + TanStack depuis le starter | sonnet | 2 |
-| `test-engineer` | Écrit uniquement les tests (pytest, vitest) | sonnet | 1 |
-| `qa-reviewer` | Teste les features, revue clean code | sonnet | 1 |
-| `pentester` | Audit sécurité défensif (OWASP) | sonnet | 1 |
-| `devops` | Docker, K8s, CI/CD, versioning | sonnet | 1 |
-| `tech-writer` | README, docs, rapports, ADR, CHANGELOG | sonnet | 1 |
-| `token-steward` | Budget tokens, règles d'économie, handoff | haiku | 1 |
+## 1. La seule chose à bien comprendre : OÙ on tape quoi
 
-Les agents **ne tournent pas tous en même temps** : on n'active que les rôles utiles à la
-phase et on ferme ceux qui ont fini (budget tokens, abonnement Pro). 3 à 5 teammates max
-à la fois.
+Il y a **deux endroits** différents. Ne les confonds pas.
 
-## Flux par phases
-```
-orientation     features        planning        design            dev               vérif            review
-project-analyst → product-owner → PO + devops  → ui-ux-designer → backend-dev ×2   → test-engineer  → product-owner
-(CONTEXT.md,      (mode solo)     + token-        (si front)       frontend-dev ×2    qa-reviewer       tech-writer
- état, reco)                      steward         spec validée →    (impl. la spec)    pentester         token-steward
-                                                  puis front-end                                        (handoff)
-```
-Tu donnes le top de passage d'une phase à l'autre ; le **lead** exécute le spawn
-(un teammate ne peut pas en spawner un autre — seul le lead spawn).
+| Endroit | C'est quoi | On y tape… |
+|---|---|---|
+| **Le terminal** | La fenêtre noire : PowerShell, ou « Git Bash » (MINGW64) | Les commandes qui **lancent** quelque chose : installer le kit, démarrer un agent (`node …`, `claude …`) |
+| **La session Claude Code** | Ce qui s'ouvre **après** avoir tapé `claude …` dans le terminal : tu discutes avec l'agent | Des **phrases normales** (« Spawn le product-owner… »). Pas de commande technique ici. |
 
-## Installation dans un projet
-Multiplateforme (Windows / Linux / macOS) — l'installeur et les scripts tournent sous
-**Node.js**, fourni avec Claude Code.
+Règle simple :
+- **Pour démarrer un agent** → terminal.
+- **Pour parler à un agent déjà démarré** → dans la session Claude Code (en français, normalement).
+
+> ⚠️ Sur Git Bash (MINGW64), écris les chemins avec des **slashes** `/`, jamais `\`.
+> `C:\Users\...` casse (les `\` disparaissent). Écris `/c/Users/...`.
+
+---
+
+## 2. Installer le kit dans un projet
+
+Tu fais ça **une fois par projet**, dans le **terminal**.
+
+**Étape A — va dans le dossier du kit :**
 ```bash
-node install.mjs /chemin/vers/mon-projet        # Linux / macOS
-node install.mjs C:\chemin\vers\mon-projet       # Windows (PowerShell ou cmd)
-cd /chemin/vers/mon-projet
-claude --agent scrum-master
+cd /c/Users/PC/Documents/claude/scrum-team-kit
 ```
-L'installeur copie `.claude/` (agents, skills, hooks, `settings.json`, statusline), le
-`CLAUDE.md`, les templates docs, et crée `docs/scrum/`. Option `--force` pour écraser
-sans confirmation.
 
-## Contenu
+**Étape B — installe dans ton projet** (remplace le chemin par celui de TON projet) :
+```bash
+node install.mjs /c/Users/PC/Documents/mon-projet
+```
+
+Ce que tu dois voir s'afficher :
+```
+Copie : .claude/ (agents, skills, hooks, settings.json, statusline.js)
+Copie : CONTEXT.md (template d'architecture a remplir au planning)
+Cree : docs/scrum/ + docs/design/ + docs/docs-templates/
+```
+- Si ton projet a **déjà** un `CLAUDE.md`, il n'est **pas écrasé** : les règles du kit
+  arrivent dans `CLAUDE.kit.md` (tu les recopies à la main dans ton `CLAUDE.md`).
+- Ajoute `--force` à la fin pour réinstaller par-dessus une version précédente du kit.
+
+---
+
+## 3. Par quel agent commencer ? (le plus important)
+
+Ça dépend de l'état du projet. Regarde la ligne qui te correspond :
+
+| Ton projet | Premier agent | Pourquoi |
+|---|---|---|
+| **Neuf et vide** (aucun code encore) | `product-owner` | Rien à analyser : on commence par définir les besoins (le backlog). |
+| **Déjà du code** (projet existant où tu viens d'ajouter le kit) | `project-analyst` | Il lit d'abord le code pour savoir ce qui existe, puis passe la main au `product-owner`. |
+| **Projet d'équipe repris** (on travaillait déjà avec les agents hier) | `project-analyst` | Il lit `docs/scrum/handoff.md` + le code et dit **où on en était** et **quel agent reprendre**. |
+
+**Comment démarrer cet agent** → dans le **terminal** :
+```bash
+cd /c/Users/PC/Documents/mon-projet
+claude --agent product-owner        # projet neuf et vide
+# ou :
+claude --agent project-analyst      # projet qui a déjà du code
+```
+
+---
+
+## 4. Le déroulé complet, étape par étape
+
+Chaque agent, **quand il finit**, dit quel agent devrait prendre la suite. Mais **c'est
+toi qui donnes le feu vert** à chaque étape. Et **seul le Scrum Master peut lancer
+(« spawner ») les autres agents** — un agent ne peut pas en lancer un autre.
+
+### A) Projet NEUF et vide
+
+1. **Terminal :** `claude --agent product-owner`
+   Tu brainstormes les fonctionnalités avec lui. Il écrit le **backlog** dans
+   `docs/scrum/product-backlog.md`. → Il te recommande de passer au design ou au dev.
+2. **Terminal :** `claude --agent scrum-master` (c'est le chef d'équipe à partir d'ici).
+   Dans la session, tu écris, par exemple :
+   > « Le backlog est prêt dans `docs/scrum`. Fais le planning avec le `devops` (branches)
+   >  et le `token-steward`. »
+3. **Si l'écran a un front** → tu dis : « Lance la phase design avec le `ui-ux-designer`. »
+   Il produit une spec dans `docs/design/`. Les développeurs front **attendent** qu'elle
+   soit validée.
+4. **Développement** → « Design validé. Spawn 2 `backend-dev` pour l'API et 2 `frontend-dev`
+   pour implémenter la spec. »
+5. **Vérification** → « Passe en vérif : `test-engineer`, `qa-reviewer`, `pentester`. »
+6. **Clôture** → « Review avec le `product-owner`, puis le `tech-writer` pour la doc, puis
+   le `token-steward` pour écrire le handoff. »
+
+### B) Projet qui a DÉJÀ du code
+
+1. **Terminal :** `claude --agent project-analyst`
+   Il lit le code, remplit `CONTEXT.md` (stack réelle, arborescence, **ce qui est fait vs
+   à faire**). → Il **passe la main au `product-owner`** et te dit ce qu'il a trouvé.
+2. **Terminal :** `claude --agent product-owner`
+   À partir de ce que l'analyste a trouvé, vous discutez de **ce qui reste à faire**. Il
+   écrit le **backlog** (`docs/scrum/product-backlog.md`) : items déjà faits (cochés) +
+   items restants, priorisés.
+3. **Ensuite :** `claude --agent scrum-master`, puis même enchaînement qu'au A (design →
+   dev → vérif → review).
+
+> Différence clé : sur un projet existant, le `project-analyst` dresse la **photo
+> technique** (ce qui existe), et le `product-owner` définit avec toi **la suite** (ce
+> qu'il faut livrer, et dans quel ordre).
+
+---
+
+## 5. Le fichier backlog et le tech-writer (à lire)
+
+- Le **backlog** est le fichier `docs/scrum/product-backlog.md`. C'est **le** document que
+  tous les agents lisent pour savoir quelle fonctionnalité faire. Le `product-owner`
+  l'écrit ; chaque item a une user story et des critères d'acceptation (cases à cocher).
+- Le **`tech-writer` reste à l'écoute pendant tout le développement**. Dès qu'une
+  fonctionnalité du backlog est livrée, c'est lui qui va **la cocher** (`- [x]`) dans le
+  backlog. Ainsi, le backlog montre à tout moment ce qui est fait et ce qui reste.
+- Le `tech-writer` écrit aussi le `README` du projet, les rapports de sprint et le `CHANGELOG`.
+
+---
+
+## 6. Les 12 agents (qui fait quoi)
+
+| Agent | Rôle | Quand l'activer |
+|---|---|---|
+| `scrum-master` | Chef d'équipe (lead). Lance les autres agents, fait respecter les règles. | Toute la session d'équipe |
+| `project-analyst` | Lit le projet, remplit `CONTEXT.md`, oriente la reprise. | **En premier**, sur un projet qui a du code |
+| `product-owner` | Besoins, backlog, priorités, validation. | Phase besoins + review |
+| `ui-ux-designer` | Direction visuelle + spec de design. | Phase design (avant le front) |
+| `backend-dev` (×2) | API Python (FastAPI/Litestar) depuis les starters. | Développement back |
+| `frontend-dev` (×2) | React + TanStack depuis le starter, implémente la spec design. | Développement front |
+| `test-engineer` | Écrit **uniquement** les tests. | Vérification |
+| `qa-reviewer` | Teste les features, relit le clean code. | Vérification |
+| `pentester` | Audit sécurité (OWASP). | Vérification |
+| `devops` | Docker, CI/CD, versioning, config serveur. | Planning + tout du long |
+| `tech-writer` | Docs, README, rapports, **coche le backlog**. | En continu + review |
+| `token-steward` | Économie de tokens, écrit le handoff de fin de session. | Planning + fin de session |
+
+---
+
+## 7. Aide-mémoire des commandes
+
+**Dans le TERMINAL** (pour démarrer) :
+```bash
+# Installer le kit dans un projet
+cd /c/Users/PC/Documents/claude/scrum-team-kit
+node install.mjs /c/Users/PC/Documents/mon-projet
+
+# Aller dans le projet et démarrer un agent
+cd /c/Users/PC/Documents/mon-projet
+claude --agent product-owner      # un seul agent (mode solo, le moins cher)
+claude --agent project-analyst    # pour un projet qui a déjà du code
+claude --agent scrum-master       # le chef d'équipe (pour coordonner plusieurs agents)
+```
+
+**Dans la SESSION Claude Code** (une fois le `scrum-master` lancé, tu écris en français) :
+```
+Spawn le product-owner pour qu'on brainstorme les fonctionnalités.
+Design validé. Spawn 2 backend-dev et 2 frontend-dev.
+Passe en vérification : test-engineer, qa-reviewer, pentester.
+```
+**Pour parler à un agent précis** déjà lancé : dans le panneau sous la zone de saisie,
+flèches `↑` `↓` pour le choisir, `Entrée` pour lui écrire, `Échap` pour revenir au chef.
+
+---
+
+## 8. Règles d'or (toujours respectées)
+
+- **Clean code** obligatoire : code propre, lisible, repris par une autre équipe.
+- **Aucune trace de Claude** dans les commits (ni co-auteur, ni footer). Seul **Dakar2024**
+  apparaît. (Déjà réglé automatiquement par `attribution` dans les settings.)
+- **Secrets** uniquement via `.env` (jamais en dur), `.env` dans `.gitignore`.
+- **Definition of Done** : clean code + lint + tests verts + revue QA + doc si livrable.
+
+---
+
+## 9. Limites (à connaître)
+
+- **Agent Teams est expérimental** : il faut une session **interactive** (pas en mode `-p`).
+- **Une seule équipe par session**, pas d'équipes imbriquées, le chef est fixe.
+- **Les agents ne reviennent pas après un `/resume`** : la continuité passe par les fichiers
+  (`docs/scrum/handoff.md`, `CONTEXT.md`, le backlog). Au redémarrage, le `project-analyst`
+  les relit et dit par où reprendre.
+- Un agent **ne lit pas `/usage`** : le `token-steward` applique des règles ; toi tu vois la
+  consommation via `/usage`, `/context` et la statusline.
+- **Split-pane** (tmux/iTerm2) non supporté dans VS Code / Windows Terminal → mode
+  `in-process` (fonctionne partout, tous OS).
+
+---
+
+## 10. Réutiliser le kit sur une autre machine / un autre projet
+
+Le kit est multiplateforme (Windows, Linux, macOS — tout tourne sous Node, fourni avec
+Claude Code). Sur une autre machine :
+```bash
+git clone <url-de-ton-depot-scrum-team-kit>
+cd scrum-team-kit
+node install.mjs /chemin/vers/un-projet
+```
+
+## Contenu du kit
 ```
 scrum-team-kit/
-├── install.mjs                 # installeur portable (Node, cross-platform)
-├── CLAUDE.md                   # règles du projet (clean code, Scrum, stack, budget)
+├── install.mjs                 # installeur (Node, cross-platform)
+├── CLAUDE.md                   # règles du projet (clean code, Scrum, stack, attribution)
 ├── docs-templates/
-│   ├── CONTEXT.template.md     # template d'architecture → déposé en CONTEXT.md dans chaque projet
-│   └── DEPENDENCY-REPORT.md    # vérif des starters (versions + alerte sécurité), 2026-10-17
+│   ├── CONTEXT.template.md     # → déposé en CONTEXT.md dans chaque projet
+│   └── DEPENDENCY-REPORT.md    # vérif des starters (versions + sécurité)
 └── .claude/
-    ├── settings.json           # active Agent Teams, Sonnet par défaut, hook, statusline
-    ├── statusline.js           # contexte + coût en continu (Node)
-    ├── hooks/definition-of-done.js    # porte qualité (ruff) sur TaskCompleted (Node)
-    ├── agents/                 # les 11 rôles
+    ├── settings.json           # Agent Teams, Sonnet par défaut, attribution, hook, statusline
+    ├── statusline.js           # contexte + coût en continu
+    ├── hooks/definition-of-done.js   # porte qualité (ruff) sur TaskCompleted
+    ├── agents/                 # les 12 rôles (+ README.md : guide détaillé des agents)
     └── skills/                 # clean-code, scrum-artifacts, git-workflow, design-resources,
                                 # starter-fastapi/litestar/react-tanstack, email-resend,
                                 # docs-style, security-audit
 ```
-
-## Comment travailler avec l'équipe
-
-### Déclencher un agent
-Deux modes :
-- **Solo (le moins cher)** — pour brainstormer avec un seul agent, lance-le comme session
-  principale : `claude --agent product-owner`. Toute la session EST cet agent. Idéal pour
-  la phase « discuter des fonctionnalités ». Les livrables vont dans `docs/scrum/`.
-- **Équipe** — `claude --agent scrum-master`, puis en langage naturel : « Spawn le
-  product-owner pour qu'on brainstorme les features. » Pour parler directement à un
-  teammate : panneau des agents (sous la saisie) → ↑↓ pour le sélectionner → **Entrée**.
-
-### Passer d'une phase à l'autre (qui délègue ?)
-**Toi** tu donnes le top ; **le lead** exécute. Un teammate (PO, designer...) ne peut pas
-spawner d'autres agents — seul le lead spawn. Exemple de session :
-> `claude --agent scrum-master`
-> « Le backlog dans docs/scrum est prêt. Lance la phase design avec le ui-ux-designer. »
-> *(tu discutes le design, tu le valides)*
-> « Design validé. Ferme le designer et spawn 2 frontend-dev pour implémenter la spec,
->  plus 2 backend-dev pour l'API invoices. »
-
-Le PO produit le backlog, le designer produit la spec : ces livrables deviennent l'entrée
-que le lead donne aux développeurs. En fin de session, demande au `token-steward` le handoff.
-
-## Limites (documentées côté Claude Code)
-- **Agent Teams est expérimental** : session interactive requise, pas en mode `-p`.
-- **Une seule équipe par session**, pas d'équipes imbriquées, lead fixe.
-- **Pas de reprise des teammates au `/resume`** : la continuité passe par `docs/scrum/`
-  (backlog, sprints, `handoff.md`). Le `token-steward` écrit ce handoff.
-- Un agent **ne peut pas lire `/usage`** : le `token-steward` applique des règles, la
-  mesure se lit via la statusline, `/usage` et `/context`.
-- **split-pane** (tmux/iTerm2) non supporté dans le terminal VS Code / Windows Terminal ;
-  le kit utilise donc le mode `in-process` (fonctionne partout, tous OS).
-
-## Multiplateforme
-L'installeur (`install.mjs`), la statusline (`.claude/statusline.js`) et le hook
-(`.claude/hooks/definition-of-done.js`) sont écrits en **Node.js** (fourni avec Claude
-Code) : ils tournent à l'identique sur **Windows, Linux et macOS**, sans dépendance à
-PowerShell ni à un shell particulier.
-
-## Dépendances des starters — à vérifier avant chaque projet
-Voir `docs-templates/DEPENDENCY-REPORT.md`. En résumé (2026-10-17) : back-ends à jour mais
-`python-jose` vulnérable (migrer vers `PyJWT`) ; front React/TanStack avec plusieurs
-retards majeurs (typescript, vite, vitest, ky, jotai, lingui...) à monter progressivement.

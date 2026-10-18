@@ -21,6 +21,11 @@ Ce projet est mené par une **équipe d'agents Scrum**. La session principale es
    L'architecture du projet (le « comment ») vit dans **`CONTEXT.md`** à la racine, rempli au
    planning et tenu à jour ; tous les agents le lisent en premier.
 4. **Definition of Done** : clean code + lint (ruff) + tests verts + revue QA + doc si livrable.
+5. **Passage de relais** : à la fin de sa tâche, chaque agent **recommande au Scrum Master
+   le prochain agent** à activer et sur quoi (ex. « backlog prêt → `ui-ux-designer` pour
+   l'écran liste »). Le Scrum Master et l'utilisateur décident ; l'utilisateur donne le top.
+6. **Backlog partagé** : le `product-owner` écrit `docs/scrum/product-backlog.md` ; tous les
+   agents le lisent, et le `tech-writer` y **coche** les items livrés au fil de l'implémentation.
 
 ## Stack de l'équipe
 - **Back-end** : Python async — FastAPI ou Litestar, toujours à partir des starters
